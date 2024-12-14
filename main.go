@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	diskCollector "github.com/tiffanyfay/prometheus-macos-filesystem-exporter/collector"
+	"github.com/tiffanyfay/prometheus-macos-exporter/diskcollector"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/collectors"
@@ -26,7 +26,7 @@ func main() {
 		collectors.NewGoCollector(),
 		collectors.NewProcessCollector(collectors.ProcessCollectorOpts{}),
 	)
-	diskCollector.GetDiskUsage()
+	diskcollector.GetDiskUsage()
 
 	// http.Handle("/metrics", promhttp.HandlerFor(reg, promhttp.HandlerOpts{Registry: reg}))
 	// log.Fatal(http.ListenAndServe(*addr, nil))
@@ -41,7 +41,7 @@ func recordDiskUsage(reg prometheus.Registerer) {
 	go func() {
 		for {
 			time.Sleep(2 * time.Second)
-			diskCollector.GetDiskUsage()
+			diskcollector.GetDiskUsage()
 			log.Println("Disk usage recorded")
 		}
 	}()

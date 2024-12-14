@@ -1,4 +1,4 @@
-module github.com/tiffanyfay/prometheus-macos-filesystem-exporter
+module github.com/tiffanyfay/prometheus-macos-exporter
 
 go 1.23.4
 
