@@ -19,17 +19,21 @@ type DiskUsage struct {
 	MountedOn  string
 }
 
-func GetDiskUsage() error {
+func GetDiskUsages() ([]DiskUsage, error) {
 	cmd := exec.Command("df", "-k")
 
 	out, err := cmd.Output()
 	if err != nil {
 		fmt.Println("Error:", err)
-		return err
+		return nil, err
 	}
 	// fmt.Println(string(output)) // Get disk usage
-	parseDiskUsage(string(out))
-	return nil
+	diskUsages, err := parseDiskUsage(string(out))
+	if err != nil {
+		return nil, err
+	}
+
+	return diskUsages, nil
 }
 
 func parseDiskUsage(data string) ([]DiskUsage, error) {
