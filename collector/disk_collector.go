@@ -53,9 +53,13 @@ func parseDiskUsage(data string) ([]DiskUsage, error) {
 	for _, line := range lines[1:] {
 		fields := strings.Fields(line)
 
+		// TODO: handle this better and find out the root cause of it being empty
+		if len(fields) == 0 {
+			continue
+		}
 		// If there aren't 8 columns, error
 		if len(fields) < 9 {
-			return nil, fmt.Errorf("error: not finding 9 fields")
+			return nil, fmt.Errorf("error: not finding 9 fields, found : %v", fields)
 		}
 
 		// Handle the case where the filesystem has a space in it
