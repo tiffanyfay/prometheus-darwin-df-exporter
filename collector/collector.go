@@ -39,9 +39,7 @@ func GetDiskUsages() ([]DiskUsage, error) {
 func parseDiskUsage(data string) ([]DiskUsage, error) {
 	var diskUsages []DiskUsage
 
-	fmt.Println("data: ", data)
 	lines := strings.Split(data, "\n")
-	fmt.Println("# lines: ", lines)
 
 	if len(lines) < 2 {
 		return nil, fmt.Errorf("error: no disk info found")
