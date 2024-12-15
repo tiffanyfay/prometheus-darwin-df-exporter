@@ -14,9 +14,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-var addr = flag.String("listen-address", ":2112", "The address to listen on for HTTP requests.")
-
 var (
+	addr = flag.String("listen-address", ":2112", "The address to listen on for HTTP requests.")
+
 	size = promauto.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: "darwin_df_size_bytes",
@@ -85,7 +85,7 @@ func recordDiskUsage() {
 				iused.WithLabelValues(fs.Filesystem, fs.Filesystem, fs.MountedOn).Set(float64(fs.IUsed))
 				ifree.WithLabelValues(fs.Filesystem, fs.Filesystem, fs.MountedOn).Set(float64(fs.IFree))
 				piused.WithLabelValues(fs.Filesystem, fs.Filesystem, fs.MountedOn).Set(float64(fs.PIUsed))
-				log.Printf("Disk info recorded for filesystem %s", fs.Filesystem)
+				// log.Printf("Disk info recorded for filesystem %s", fs.Filesystem)
 			}
 		}
 	}()
@@ -93,7 +93,7 @@ func recordDiskUsage() {
 
 func main() {
 	flag.Parse()
-	fmt.Println("Endpoint: http://localhost:2112/metrics")
+	fmt.Println("Endpoint: http://localhost" + *addr + "/metrics")
 
 	// Create non-global registry.
 	// reg := prometheus.NewRegistry()
